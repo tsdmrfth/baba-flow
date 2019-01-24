@@ -7,7 +7,13 @@
     },
     "parserOptions": {
         "ecmaFeatures": {
-            "jsx": true
+            "jsx": true,
+            "arrowFunctions": true,
+            "classes": true,
+            "modules": true,
+            "spread": true,
+            "destructuring": true,
+            "templateStrings": true
         },
         "sourceType": "module"
     },

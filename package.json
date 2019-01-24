@@ -12,12 +12,14 @@
     "activationEvents": [
         "onCommand:extension.sayHello"
     ],
-    "main": "./extension",
+    "main": "./src/extension",
     "contributes": {
-        "commands": [{
-            "command": "extension.sayHello",
-            "title": "Hello World"
-        }]
+        "commands": [
+            {
+                "command": "extension.sayHello",
+                "title": "Hello World"
+            }
+        ]
     },
     "scripts": {
         "postinstall": "node ./node_modules/vscode/bin/install",
