@@ -134,8 +134,8 @@ const checkHasBranch = async (branchName) => {
     return branches.includes(branchName)
 }
 
-const getBranches = async () => {
-    const { error, stdout, stderr } = await exec('git branch -a', { cwd: vscode.workspace.rootPath })
+const getBranches = async (branchTag) => {
+    const { error, stdout, stderr } = await exec(`git flow ${branchTag} list`, { cwd: vscode.workspace.rootPath })
     if (error) {
         showErrorMessage(error)
         return undefined
@@ -143,19 +143,20 @@ const getBranches = async () => {
         showErrorMessage(stderr)
         return undefined
     }
-
     return stdout
 }
 
-const listBranches = async (searchKey) => {
-    let branches = await getBranches()
-    let branchNames = branches.split('\n').filter(name => {
-        return name.trim() !== "" && name.includes(searchKey || '')
-    })
-    branchNames = branchNames.map(name => {
-        return name.replace('*', '').trim()
-    })
-    return branchNames
+const listBranches = async (branchTag) => {
+    let branches = await getBranches(branchTag)
+    if (branches) {
+        let branchNames = branches.split('\n').filter(name => {
+            return name.trim() !== ""
+        })
+        branchNames = branchNames.map(name => {
+            return name.replace('*', '').trim()
+        })
+        return branchNames
+    }
 }
 
 const getTerminal = () => {
