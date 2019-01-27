@@ -17,7 +17,7 @@
         "commands": [
             {
                 "command": "extension.gfInit",
-                "title": "Git Flow: init"
+                "title": "Git Flow: Init"
             }
         ]
     },
