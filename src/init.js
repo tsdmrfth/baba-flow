@@ -30,8 +30,7 @@ const init = (context) => {
             result = await showInputBox(`${strings.ninthGFInitQuestion} ${vscode.workspace.rootPath}/.git/hooks`)
             hookDir = await returnValue(result, '')
 
-            let terminal = vscode.window.createTerminal('BABA-Flow')
-            terminal.show()
+            let terminal = getTerminal()
             terminal.sendText('git flow init')
             terminal.onDidWriteData(data => {
                 if (data.includes('[master]') && !this.isMasterSent) {
@@ -61,6 +60,7 @@ const init = (context) => {
                 } else if (data.includes('/.git/hooks') && !this.isHookDirSent) {
                     terminal.sendText(hookDir)
                     this.isHookDirSent = true
+                    terminal.dispose()
                 }
             })
         }
@@ -75,15 +75,48 @@ const init = (context) => {
                 return showErrorMessage(strings.featureStartNameExistsError)
             }
 
-            let terminal = vscode.window.createTerminal('BABA-Flow')
+            let terminal = getTerminal()
             terminal.sendText(`git flow feature start ${featureName}`)
             terminal.dispose()
             showInformationMessage(strings.branchCreated.format(`feature/${featureName}`))
         }
     })
 
+    let gfFeatureFinish = vscode.commands.registerCommand('baba-flow.gfFeatureFinish', async () => {
+        if (await checkGF()) {
+            const branches = await listBranches('feature')
+            if (Array.isArray(branches)) {
+                if (branches.length === 0) {
+                    return showInformationMessage(strings.dontHaveBranch.format('feature'))
+                }
+
+                let quickPick = vscode.window.createQuickPick()
+                quickPick.placeholder = strings.selectBranch.format('feature')
+                quickPick.items = branches.map(branch => {
+                    return {
+                        label: branch
+                    }
+                })
+                quickPick.onDidChangeSelection(selection => {
+                    const selected = selection[0]
+                    let { label } = selected
+                    label = label.replace('feature/', '')
+                    if (label) {
+                        let terminal = getTerminal()
+                        terminal.sendText(`git flow feature finish ${label}`)
+                        showInformationMessage(strings.branchDeleted.format(`feature/${label}`))
+                        quickPick.dispose()
+                        terminal.dispose()
+                    }
+                })
+                quickPick.show()
+            }
+        }
+    })
+
     context.subscriptions.push(gfInit)
     context.subscriptions.push(gfFeatureStart)
+    context.subscriptions.push(gfFeatureFinish)
 }
 
 const checkGF = async () => {
@@ -127,6 +160,11 @@ const showInformationMessage = (message) => {
 }
 
 const checkHasBranch = async (branchName) => {
+    const branches = await getBranches()
+    return branches.includes(branchName)
+}
+
+const getBranches = async () => {
     const { error, stdout, stderr } = await exec('git branch -a', { cwd: vscode.workspace.rootPath })
     if (error) {
         showErrorMessage(error)
@@ -136,7 +174,22 @@ const checkHasBranch = async (branchName) => {
         return undefined
     }
 
-    return stdout.includes(branchName)
+    return stdout
+}
+
+const listBranches = async (searchKey) => {
+    let branches = await getBranches()
+    let branchNames = branches.split('\n').filter(name => {
+        return name.trim() !== "" && name.includes(searchKey || '')
+    })
+    branchNames = branchNames.map(name => {
+        return name.replace('*', '').trim()
+    })
+    return branchNames
+}
+
+const getTerminal = () => {
+    return vscode.window.createTerminal('BABA-Flow')
 }
 
 module.exports = init

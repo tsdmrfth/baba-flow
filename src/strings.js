@@ -13,5 +13,8 @@ module.exports = {
     featureStart: 'What is the new feature name that you want to start?',
     featureStartEmptyStringWarning: 'Feature name can not be an empty string.',
     featureStartNameExistsError: "Fatal: Branch 'feature/hello' already exists. Pick another name.",
-    branchCreated: 'Branch {0} successfully created.'
+    branchCreated: 'Branch {0} successfully created.',
+    selectBranch: 'Select {0} branch to finish.',
+    branchDeleted: 'Branch {0} successfully deleted.',
+    dontHaveBranch: 'You do not have {0} branches.'
 }

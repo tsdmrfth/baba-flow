@@ -11,7 +11,8 @@
     ],
     "activationEvents": [
         "onCommand:baba-flow.gfInit",
-        "onCommand:baba-flow.gfFeatureStart"
+        "onCommand:baba-flow.gfFeatureStart",
+        "onCommand:baba-flow.gfFeatureFinish"
     ],
     "main": "./src/extension",
     "contributes": {
@@ -23,6 +24,10 @@
             {
                 "command": "baba-flow.gfFeatureStart",
                 "title": "Git Flow: Feature Start"
+            },
+            {
+                "command": "baba-flow.gfFeatureFinish",
+                "title": "Git Flow: Feature Finish"
             }
         ]
     },
