@@ -10,14 +10,14 @@
         "Other"
     ],
     "activationEvents": [
-        "onCommand:extension.sayHello"
+        "onCommand:extension.gfInit"
     ],
     "main": "./src/extension",
     "contributes": {
         "commands": [
             {
-                "command": "extension.sayHello",
-                "title": "Hello World"
+                "command": "extension.gfInit",
+                "title": "Git Flow: init"
             }
         ]
     },
@@ -26,10 +26,14 @@
         "test": "node ./node_modules/vscode/bin/test"
     },
     "devDependencies": {
-        "typescript": "^3.1.4",
-        "vscode": "^1.1.25",
-        "eslint": "^4.11.0",
+        "@types/mocha": "^2.2.42",
         "@types/node": "^8.10.25",
-        "@types/mocha": "^2.2.42"
+        "eslint": "^4.11.0",
+        "expect": "^23.6.0",
+        "typescript": "^3.1.4",
+        "vscode": "^1.1.25"
+    },
+    "dependencies": {
+        "open": "^0.0.5"
     }
 }
