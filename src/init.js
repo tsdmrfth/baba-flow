@@ -5,7 +5,7 @@ const open = require('open')
 const { isEmptyString } = require('./utils/isEmptyString')
 
 const init = (context) => {
-    let gfInit = vscode.commands.registerCommand('extension.gfInit', async () => {
+    let gfInit = vscode.commands.registerCommand('baba-flow.gfInit', async () => {
         let master, develop, feature, bugfix, release, hotfix, support, tagPrefix, hookDir = ''
         if (await checkGF()) {
             let result = await showInputBox(strings.firstGFInitQuestion)
