@@ -5,13 +5,20 @@ const open = require('open')
 
 const init = (context) => {
     let gfInit = vscode.commands.registerCommand('extension.gfInit', async () => {
-        let isLibraryInstalled = await checkIsCommandInstalled('mamam')
-        if (!isLibraryInstalled) {
-            showLibraryNotInstalledMessage()
+        if (await checkGF()) {
+
         }
     });
 
     context.subscriptions.push(gfInit);
+}
+
+const checkGF = async () => {
+    let isLibraryInstalled = await checkIsCommandInstalled('git flow')
+    if (!isLibraryInstalled) {
+        showLibraryNotInstalledMessage()
+    }
+    return isLibraryInstalled
 }
 
 const showLibraryNotInstalledMessage = () => {
