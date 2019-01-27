@@ -67,7 +67,7 @@ const init = (context) => {
     });
 
     let gfFeatureStart = vscode.commands.registerCommand('baba-flow.gfFeatureStart', async () => {
-        handleBranchCreation(strings.branchStart.format(strings.feature), strings.feature)
+        handleBranchCreation(strings.feature)
     })
 
     let gfFeatureFinish = vscode.commands.registerCommand('baba-flow.gfFeatureFinish', async () => {
@@ -152,9 +152,9 @@ const getTerminal = () => {
     return vscode.window.createTerminal('BABA-Flow')
 }
 
-const handleBranchCreation = async (inputBoxPlaceholder, branchTag) => {
+const handleBranchCreation = async (branchTag) => {
     if (await checkGF()) {
-        let featureName = await showInputBox(inputBoxPlaceholder)
+        let featureName = await showInputBox(strings.branchStart.format(branchTag))
         if (!featureName) return
         if (isEmptyString(featureName)) {
             return showWarningMessage(strings.featureStartEmptyStringWarning)
