@@ -67,51 +67,11 @@ const init = (context) => {
     });
 
     let gfFeatureStart = vscode.commands.registerCommand('baba-flow.gfFeatureStart', async () => {
-        if (await checkGF()) {
-            let featureName = await showInputBox(strings.featureStart)
-            if (isEmptyString(featureName)) {
-                return showWarningMessage(strings.featureStartEmptyStringWarning)
-            } else if (await checkHasBranch(`feature/${featureName}`)) {
-                return showErrorMessage(strings.featureStartNameExistsError)
-            }
-
-            let terminal = getTerminal()
-            terminal.sendText(`git flow feature start ${featureName}`)
-            terminal.dispose()
-            showInformationMessage(strings.branchCreated.format(`feature/${featureName}`))
-        }
+        handleBranchCreation(strings.branchStart.format(strings.feature), strings.feature)
     })
 
     let gfFeatureFinish = vscode.commands.registerCommand('baba-flow.gfFeatureFinish', async () => {
-        if (await checkGF()) {
-            const branches = await listBranches('feature')
-            if (Array.isArray(branches)) {
-                if (branches.length === 0) {
-                    return showInformationMessage(strings.dontHaveBranch.format('feature'))
-                }
-
-                let quickPick = vscode.window.createQuickPick()
-                quickPick.placeholder = strings.selectBranch.format('feature')
-                quickPick.items = branches.map(branch => {
-                    return {
-                        label: branch
-                    }
-                })
-                quickPick.onDidChangeSelection(selection => {
-                    const selected = selection[0]
-                    let { label } = selected
-                    label = label.replace('feature/', '')
-                    if (label) {
-                        let terminal = getTerminal()
-                        terminal.sendText(`git flow feature finish ${label}`)
-                        showInformationMessage(strings.branchDeleted.format(`feature/${label}`))
-                        quickPick.dispose()
-                        terminal.dispose()
-                    }
-                })
-                quickPick.show()
-            }
-        }
+        handleBranchDeletion(strings.feature)
     })
 
     context.subscriptions.push(gfInit)
@@ -190,6 +150,55 @@ const listBranches = async (searchKey) => {
 
 const getTerminal = () => {
     return vscode.window.createTerminal('BABA-Flow')
+}
+
+const handleBranchCreation = async (inputBoxPlaceholder, branchTag) => {
+    if (await checkGF()) {
+        let featureName = await showInputBox(inputBoxPlaceholder)
+        if (!featureName) return
+        if (isEmptyString(featureName)) {
+            return showWarningMessage(strings.featureStartEmptyStringWarning)
+        } else if (await checkHasBranch(`${branchTag}/${featureName}`)) {
+            return showErrorMessage(strings.featureStartNameExistsError)
+        }
+
+        let terminal = getTerminal()
+        terminal.sendText(`git flow ${branchTag} start ${featureName}`)
+        terminal.dispose()
+        showInformationMessage(strings.branchCreated.format(`${branchTag}/${featureName}`))
+    }
+}
+
+const handleBranchDeletion = async (branchTag) => {
+    if (await checkGF()) {
+        const branches = await listBranches(branchTag)
+        if (Array.isArray(branches)) {
+            if (branches.length === 0) {
+                return showInformationMessage(strings.dontHaveBranch.format(branchTag))
+            }
+
+            let quickPick = vscode.window.createQuickPick()
+            quickPick.placeholder = strings.selectBranch.format(branchTag)
+            quickPick.items = branches.map(branch => {
+                return {
+                    label: branch
+                }
+            })
+            quickPick.onDidChangeSelection(selection => {
+                const selected = selection[0]
+                let { label } = selected
+                label = label.replace(`${branchTag}/`, '')
+                if (label) {
+                    let terminal = getTerminal()
+                    terminal.sendText(`git flow ${branchTag} finish ${label}`)
+                    showInformationMessage(strings.branchDeleted.format(`${branchTag}/${label}`))
+                    quickPick.dispose()
+                    terminal.dispose()
+                }
+            })
+            quickPick.show()
+        }
+    }
 }
 
 module.exports = init
