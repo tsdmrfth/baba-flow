@@ -6,7 +6,7 @@ const { isEmptyString } = require('./utils/isEmptyString')
 
 const init = (context) => {
     let gfInit = vscode.commands.registerCommand('extension.gfInit', async () => {
-        let master, develop, feature, bugfix, release, hotfix, support, tagPrefix = ''
+        let master, develop, feature, bugfix, release, hotfix, support, tagPrefix, hookDir = ''
         if (await checkGF()) {
             let result = await showInputBox(strings.firstGFInitQuestion)
             master = returnValue(result, 'master')
@@ -24,32 +24,40 @@ const init = (context) => {
             support = returnValue(result, 'support')
             result = await showInputBox(strings.eighthGFInitQuestion)
             tagPrefix = returnValue(result, '')
+            result = await showInputBox(`${strings.ninthGFInitQuestion} ${vscode.workspace.rootPath}/.git/hooks`)
+            hookDir = await returnValue(result, '')
 
             let terminal = vscode.window.createTerminal('BABA-Flow')
             terminal.show()
             terminal.sendText('git flow init')
             terminal.onDidWriteData(data => {
-                if (data.includes('master') && this.isMasterSent) {
+                if (data.includes('[master]') && !this.isMasterSent) {
                     terminal.sendText(master)
                     this.isMasterSent = true
-                } else if (data.includes('develop') && this.isDevelopSent) {
+                } else if (data.includes('[develop]') && !this.isDevelopSent) {
                     terminal.sendText(develop)
                     this.isDevelopSent = true
-                } else if (data.includes('feature') && this.isFeatureSent) {
+                } else if (data.includes('[feature/]') && !this.isFeatureSent) {
                     terminal.sendText(feature)
                     this.isFeatureSent = true
-                } else if (data.includes('bugfix') && this.isBugFixSent) {
+                } else if (data.includes('[bugfix/]') && !this.isBugFixSent) {
                     terminal.sendText(bugfix)
                     this.isBugFixSent = true
-                } else if (data.includes('release') && this.isReleaseSent) {
+                } else if (data.includes('[release/]') && !this.isReleaseSent) {
                     terminal.sendText(release)
                     this.isReleaseSent = true
-                } else if (data.includes('hotfix') && this.isHotFixSent) {
+                } else if (data.includes('[hotfix/]') && !this.isHotFixSent) {
                     terminal.sendText(hotfix)
                     this.isHotFixSent = true
-                } else if (data.includes('tag prefix') && this.isTagPrefixSent) {
+                } else if (data.includes('[support/]') && !this.isSupportSent) {
+                    terminal.sendText(support)
+                    this.isHotFixSent = true
+                } else if (data.includes('tag prefix') && !this.isTagPrefixSent) {
                     terminal.sendText(tagPrefix)
                     this.isTagPrefixSent = true
+                } else if (data.includes('/.git/hooks') && !this.isHookDirSent) {
+                    terminal.sendText(hookDir)
+                    this.isHookDirSent = true
                 }
             })
         }
@@ -77,7 +85,7 @@ const showLibraryNotInstalledMessage = () => {
 
 const showInputBox = async (message) => {
     let result = await vscode.window.showInputBox({
-        placeHolder: message
+        placeHolder: message,
     })
     return result
 }

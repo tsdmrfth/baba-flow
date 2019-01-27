@@ -2,12 +2,7 @@ const exec = require('child_process').exec
 
 const checkIsCommandInstalled = (command) => {
     return new Promise((resolve) => {
-        exec(`command -v ${command}`, (error, stdout, stderr) => {
-            console.log({
-                error,
-                stdout,
-                stderr
-            })
+        exec(`command -v ${command}`, (error) => {
             if (error && error.code === 1) {
                 resolve(false)
             }

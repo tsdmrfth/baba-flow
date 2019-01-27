@@ -9,4 +9,5 @@ module.exports = {
     sixthGFInitQuestion: 'How to name your hotfix branches? [default is hotfix/]',
     seventhGFInitQuestion: 'How to name your support branches? [default is support/]',
     eighthGFInitQuestion: 'How to name your version tag prefix?',
+    ninthGFInitQuestion: 'Hooks and filters directory? default is',
 }
