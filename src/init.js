@@ -63,7 +63,21 @@ const init = (context) => {
         }
     });
 
-    context.subscriptions.push(gfInit);
+    let gfFeatureStart = vscode.commands.registerCommand('baba-flow.gfFeatureStart', async () => {
+        if (await checkGF()) {
+            let featureName = await showInputBox(strings.featureStart)
+            if (isEmptyString(featureName)) {
+                return showWarningMessage(strings.featureStartWarning)
+            }
+
+            let terminal = vscode.window.createTerminal('BABA-Flow')
+            terminal.show()
+            terminal.sendText(`git flow feature start ${featureName}`)
+        }
+    })
+
+    context.subscriptions.push(gfInit)
+    context.subscriptions.push(gfFeatureStart)
 }
 
 const checkGF = async () => {
@@ -92,6 +106,10 @@ const showInputBox = async (message) => {
 
 const returnValue = (value, defaultValue) => {
     return isEmptyString(value) ? defaultValue : value
+}
+
+const showWarningMessage = (message) => {
+    vscode.window.showWarningMessage(message)
 }
 
 module.exports = init

@@ -10,4 +10,6 @@ module.exports = {
     seventhGFInitQuestion: 'How to name your support branches? [default is support/]',
     eighthGFInitQuestion: 'How to name your version tag prefix?',
     ninthGFInitQuestion: 'Hooks and filters directory? default is',
+    featureStart: 'What is the new feature name that you want to start?',
+    featureStartWarning: 'Feature name can not be an empty string.'
 }
