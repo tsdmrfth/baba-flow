@@ -66,11 +66,11 @@ const init = (context) => {
         }
     });
 
-    let gfFeatureStart = vscode.commands.registerCommand('baba-flow.gfFeatureStart', async () => {
+    let gfFeatureStart = vscode.commands.registerCommand('baba-flow.gfFeatureStart', () => {
         handleBranchCreation(strings.feature)
     })
 
-    let gfFeatureFinish = vscode.commands.registerCommand('baba-flow.gfFeatureFinish', async () => {
+    let gfFeatureFinish = vscode.commands.registerCommand('baba-flow.gfFeatureFinish', () => {
         handleBranchDeletion(strings.feature)
     })
 
