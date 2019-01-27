@@ -82,11 +82,21 @@ const init = (context) => {
         handleBranchDeletion(strings.bugfix)
     })
 
+    let gfReleaseStart = vscode.commands.registerCommand('baba-flow.gfReleaseStart', () => {
+        handleBranchCreation(strings.release)
+    })
+
+    let gfReleaseFinish = vscode.commands.registerCommand('baba-flow.gfReleaseFinish', () => {
+        handleBranchDeletion(strings.release)
+    })
+
     context.subscriptions.push(gfInit)
     context.subscriptions.push(gfFeatureStart)
     context.subscriptions.push(gfFeatureFinish)
     context.subscriptions.push(gfBugFixStart)
     context.subscriptions.push(gfBugFixFinish)
+    context.subscriptions.push(gfReleaseStart)
+    context.subscriptions.push(gfReleaseFinish)
 }
 
 const checkGF = async () => {
@@ -129,26 +139,22 @@ const showInformationMessage = (message) => {
     vscode.window.showInformationMessage(message)
 }
 
-const checkHasBranch = async (branchName) => {
-    const branches = await getBranches()
+const checkHasBranch = async (branchTag, branchName) => {
+    const branches = await getBranches(branchTag)
     return branches.includes(branchName)
 }
 
 const getBranches = async (branchTag) => {
     const { error, stdout, stderr } = await exec(`git flow ${branchTag} list`, { cwd: vscode.workspace.rootPath })
-    if (error) {
-        showErrorMessage(error)
-        return undefined
-    } else if (stderr) {
-        showErrorMessage(stderr)
-        return undefined
+    if (error || stderr) {
+        return []
     }
     return stdout
 }
 
 const listBranches = async (branchTag) => {
     let branches = await getBranches(branchTag)
-    if (branches) {
+    if (branches && branches.length > 0) {
         let branchNames = branches.split('\n').filter(name => {
             return name.trim() !== ""
         })
@@ -157,6 +163,7 @@ const listBranches = async (branchTag) => {
         })
         return branchNames
     }
+    return []
 }
 
 const getTerminal = () => {
@@ -165,18 +172,18 @@ const getTerminal = () => {
 
 const handleBranchCreation = async (branchTag) => {
     if (await checkGF()) {
-        let featureName = await showInputBox(strings.branchStart.format(branchTag))
-        if (!featureName) return
-        if (isEmptyString(featureName)) {
+        let branchName = await showInputBox(strings.branchStart.format(branchTag))
+        if (!branchName) return
+        if (isEmptyString(branchName)) {
             return showWarningMessage(strings.featureStartEmptyStringWarning)
-        } else if (await checkHasBranch(`${branchTag}/${featureName}`)) {
+        } else if (await checkHasBranch(branchTag, branchName)) {
             return showErrorMessage(strings.featureStartNameExistsError)
         }
 
         let terminal = getTerminal()
-        terminal.sendText(`git flow ${branchTag} start ${featureName}`)
+        terminal.sendText(`git flow ${branchTag} start ${branchName}`)
         terminal.dispose()
-        showInformationMessage(strings.branchCreated.format(`${branchTag}/${featureName}`))
+        showInformationMessage(strings.branchCreated.format(`${branchTag}/${branchName}`))
     }
 }
 
@@ -202,7 +209,7 @@ const handleBranchDeletion = async (branchTag) => {
                 if (label) {
                     let terminal = getTerminal()
                     terminal.sendText(`git flow ${branchTag} finish ${label}`)
-                    showInformationMessage(strings.branchDeleted.format(`${branchTag}/${label}`))
+                    showInformationMessage(strings.branchFinished.format(`${branchTag}/${label}`))
                     quickPick.dispose()
                     terminal.dispose()
                 }

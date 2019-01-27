@@ -14,7 +14,9 @@
         "onCommand:baba-flow.gfFeatureStart",
         "onCommand:baba-flow.gfFeatureFinish",
         "onCommand:baba-flow.gfBugFixStart",
-        "onCommand:baba-flow.gfBugFixFinish"
+        "onCommand:baba-flow.gfBugFixFinish",
+        "onCommand:baba-flow.gfReleaseStart",
+        "onCommand:baba-flow.gfReleaseFinish"
     ],
     "main": "./src/extension",
     "contributes": {
@@ -38,6 +40,14 @@
             {
                 "command": "baba-flow.gfBugFixFinish",
                 "title": "Git Flow: Bug Fix Finish"
+            },
+            {
+                "command": "baba-flow.gfReleaseStart",
+                "title": "Git Flow: Release Start"
+            },
+            {
+                "command": "baba-flow.gfReleaseFinish",
+                "title": "Git Flow: Release Finish"
             }
         ]
     },

@@ -15,8 +15,9 @@ module.exports = {
     featureStartNameExistsError: "Fatal: Branch 'feature/hello' already exists. Pick another name.",
     branchCreated: 'Branch {0} successfully created.',
     selectBranch: 'Select {0} branch to finish.',
-    branchDeleted: 'Branch {0} successfully deleted.',
+    branchFinished: 'Branch {0} successfully finished.',
     dontHaveBranch: 'You do not have {0} branches.',
     feature: 'feature',
-    bugfix: 'bugfix'
+    bugfix: 'bugfix',
+    release: 'release'
 }
