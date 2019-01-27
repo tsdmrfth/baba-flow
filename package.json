@@ -12,7 +12,9 @@
     "activationEvents": [
         "onCommand:baba-flow.gfInit",
         "onCommand:baba-flow.gfFeatureStart",
-        "onCommand:baba-flow.gfFeatureFinish"
+        "onCommand:baba-flow.gfFeatureFinish",
+        "onCommand:baba-flow.gfBugFixStart",
+        "onCommand:baba-flow.gfBugFixFinish"
     ],
     "main": "./src/extension",
     "contributes": {
@@ -28,6 +30,14 @@
             {
                 "command": "baba-flow.gfFeatureFinish",
                 "title": "Git Flow: Feature Finish"
+            },
+            {
+                "command": "baba-flow.gfBugFixStart",
+                "title": "Git Flow: Bug Fix Start"
+            },
+            {
+                "command": "baba-flow.gfBugFixFinish",
+                "title": "Git Flow: Bug Fix Finish"
             }
         ]
     },

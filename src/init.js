@@ -74,9 +74,19 @@ const init = (context) => {
         handleBranchDeletion(strings.feature)
     })
 
+    let gfBugFixStart = vscode.commands.registerCommand('baba-flow.gfBugFixStart', () => {
+        handleBranchCreation(strings.bugfix)
+    })
+
+    let gfBugFixFinish = vscode.commands.registerCommand('baba-flow.gfBugFixFinish', () => {
+        handleBranchDeletion(strings.bugfix)
+    })
+
     context.subscriptions.push(gfInit)
     context.subscriptions.push(gfFeatureStart)
     context.subscriptions.push(gfFeatureFinish)
+    context.subscriptions.push(gfBugFixStart)
+    context.subscriptions.push(gfBugFixFinish)
 }
 
 const checkGF = async () => {

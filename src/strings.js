@@ -17,5 +17,6 @@ module.exports = {
     selectBranch: 'Select {0} branch to finish.',
     branchDeleted: 'Branch {0} successfully deleted.',
     dontHaveBranch: 'You do not have {0} branches.',
-    feature: 'feature'
+    feature: 'feature',
+    bugfix: 'bugfix'
 }
