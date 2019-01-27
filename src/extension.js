@@ -1,4 +1,5 @@
 const init = require('./init')
+require('./utils/prototypes')
 
 function activate(context) {
     init(context)

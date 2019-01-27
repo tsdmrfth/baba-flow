@@ -1,7 +1,10 @@
-const vscode = require('vscode');
+const vscode = require('vscode')
+const open = require('open')
+const util = require('util')
+const exec = util.promisify(require('child_process').exec)
+
 const checkIsCommandInstalled = require('./utils/checkIsCommandInstalled')
 const strings = require('./strings')
-const open = require('open')
 const { isEmptyString } = require('./utils/isEmptyString')
 
 const init = (context) => {
@@ -67,12 +70,15 @@ const init = (context) => {
         if (await checkGF()) {
             let featureName = await showInputBox(strings.featureStart)
             if (isEmptyString(featureName)) {
-                return showWarningMessage(strings.featureStartWarning)
+                return showWarningMessage(strings.featureStartEmptyStringWarning)
+            } else if (await checkHasBranch(`feature/${featureName}`)) {
+                return showErrorMessage(strings.featureStartNameExistsError)
             }
 
             let terminal = vscode.window.createTerminal('BABA-Flow')
-            terminal.show()
             terminal.sendText(`git flow feature start ${featureName}`)
+            terminal.dispose()
+            showInformationMessage(strings.branchCreated.format(`feature/${featureName}`))
         }
     })
 
@@ -110,6 +116,27 @@ const returnValue = (value, defaultValue) => {
 
 const showWarningMessage = (message) => {
     vscode.window.showWarningMessage(message)
+}
+
+const showErrorMessage = (error) => {
+    vscode.window.showErrorMessage(error)
+}
+
+const showInformationMessage = (message) => {
+    vscode.window.showInformationMessage(message)
+}
+
+const checkHasBranch = async (branchName) => {
+    const { error, stdout, stderr } = await exec('git branch -a', { cwd: vscode.workspace.rootPath })
+    if (error) {
+        showErrorMessage(error)
+        return undefined
+    } else if (stderr) {
+        showErrorMessage(stderr)
+        return undefined
+    }
+
+    return stdout.includes(branchName)
 }
 
 module.exports = init

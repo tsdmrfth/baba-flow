@@ -11,5 +11,7 @@ module.exports = {
     eighthGFInitQuestion: 'How to name your version tag prefix?',
     ninthGFInitQuestion: 'Hooks and filters directory? default is',
     featureStart: 'What is the new feature name that you want to start?',
-    featureStartWarning: 'Feature name can not be an empty string.'
+    featureStartEmptyStringWarning: 'Feature name can not be an empty string.',
+    featureStartNameExistsError: "Fatal: Branch 'feature/hello' already exists. Pick another name.",
+    branchCreated: 'Branch {0} successfully created.'
 }
