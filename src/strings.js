@@ -13,13 +13,15 @@ module.exports = {
     branchStart: 'What is the new {0} branch name that you want to start?',
     branchNameEmptyWarning: 'Branch name can not be an empty string.',
     branchNameExist: "Fatal: Branch {0} already exists. Pick another name.",
-    branchCreated: 'Branch {0} successfully created.',
-    selectBranch: 'Select {0} branch to finish.',
+    branchCreated: `Branch '{0}' successfully created.`,
+    selectBranch: `Select '{0}' branch to finish.`,
     branchFinished: 'Branch {0} successfully finished.',
     dontHaveBranch: 'You do not have {0} branches.',
     feature: 'feature',
     bugfix: 'bugfix',
     release: 'release',
     hotfix: 'hotfix',
-    existingReleaseBranchError: 'There is an existing release branch {0}. Finish that one first.'
+    support: 'support',
+    existingReleaseBranchError: 'There is an existing release branch {0}. Finish that one first.',
+    optionalSelectedBaseBranch: 'Select one of your branches to basing it. (default is {0})',
 }
