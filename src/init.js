@@ -71,7 +71,7 @@ const init = (context) => {
     })
 
     let gfFeatureFinish = vscode.commands.registerCommand('baba-flow.gfFeatureFinish', () => {
-        handleBranchDeletion(strings.feature)
+        handleBranchFinishing(strings.feature)
     })
 
     let gfBugFixStart = vscode.commands.registerCommand('baba-flow.gfBugFixStart', () => {
@@ -79,7 +79,7 @@ const init = (context) => {
     })
 
     let gfBugFixFinish = vscode.commands.registerCommand('baba-flow.gfBugFixFinish', () => {
-        handleBranchDeletion(strings.bugfix)
+        handleBranchFinishing(strings.bugfix)
     })
 
     let gfReleaseStart = vscode.commands.registerCommand('baba-flow.gfReleaseStart', async () => {
@@ -92,7 +92,7 @@ const init = (context) => {
     })
 
     let gfReleaseFinish = vscode.commands.registerCommand('baba-flow.gfReleaseFinish', () => {
-        handleBranchDeletion(strings.release)
+        handleBranchFinishing(strings.release)
     })
 
     let gfHotFixStart = vscode.commands.registerCommand('baba-flow.gfHotFixStart', () => {
@@ -100,7 +100,7 @@ const init = (context) => {
     })
 
     let gfHotFixFinish = vscode.commands.registerCommand('baba-flow.gfHotFixFinish', () => {
-        handleBranchDeletion(strings.hotfix)
+        handleBranchFinishing(strings.hotfix)
     })
 
     context.subscriptions.push(gfInit)
@@ -202,7 +202,7 @@ const handleBranchCreation = async (branchTag) => {
     }
 }
 
-const handleBranchDeletion = async (branchTag) => {
+const handleBranchFinishing = async (branchTag) => {
     if (await checkGF()) {
         const branches = await listBranches(branchTag)
         if (Array.isArray(branches)) {
