@@ -82,12 +82,25 @@ const init = (context) => {
         handleBranchDeletion(strings.bugfix)
     })
 
-    let gfReleaseStart = vscode.commands.registerCommand('baba-flow.gfReleaseStart', () => {
+    let gfReleaseStart = vscode.commands.registerCommand('baba-flow.gfReleaseStart', async () => {
+        const releaseBranches = await listBranches(strings.release)
+        if (releaseBranches && releaseBranches.length > 0) {
+            const branchName = releaseBranches[0]
+            return showInformationMessage(strings.existingReleaseBranchError.format(branchName))
+        }
         handleBranchCreation(strings.release)
     })
 
     let gfReleaseFinish = vscode.commands.registerCommand('baba-flow.gfReleaseFinish', () => {
         handleBranchDeletion(strings.release)
+    })
+
+    let gfHotFixStart = vscode.commands.registerCommand('baba-flow.gfHotFixStart', () => {
+        handleBranchCreation(strings.hotfix)
+    })
+
+    let gfHotFixFinish = vscode.commands.registerCommand('baba-flow.gfHotFixFinish', () => {
+        handleBranchDeletion(strings.hotfix)
     })
 
     context.subscriptions.push(gfInit)
@@ -97,6 +110,8 @@ const init = (context) => {
     context.subscriptions.push(gfBugFixFinish)
     context.subscriptions.push(gfReleaseStart)
     context.subscriptions.push(gfReleaseFinish)
+    context.subscriptions.push(gfHotFixStart)
+    context.subscriptions.push(gfHotFixFinish)
 }
 
 const checkGF = async () => {
@@ -175,9 +190,9 @@ const handleBranchCreation = async (branchTag) => {
         let branchName = await showInputBox(strings.branchStart.format(branchTag))
         if (!branchName) return
         if (isEmptyString(branchName)) {
-            return showWarningMessage(strings.featureStartEmptyStringWarning)
+            return showWarningMessage(strings.branchNameEmptyWarning)
         } else if (await checkHasBranch(branchTag, branchName)) {
-            return showErrorMessage(strings.featureStartNameExistsError)
+            return showErrorMessage(strings.branchNameExist.format(`${branchTag}/${branchName}`))
         }
 
         let terminal = getTerminal()

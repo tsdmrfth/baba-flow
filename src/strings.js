@@ -11,13 +11,15 @@ module.exports = {
     eighthGFInitQuestion: 'How to name your version tag prefix?',
     ninthGFInitQuestion: 'Hooks and filters directory? default is',
     branchStart: 'What is the new {0} branch name that you want to start?',
-    featureStartEmptyStringWarning: 'Feature name can not be an empty string.',
-    featureStartNameExistsError: "Fatal: Branch 'feature/hello' already exists. Pick another name.",
+    branchNameEmptyWarning: 'Branch name can not be an empty string.',
+    branchNameExist: "Fatal: Branch {0} already exists. Pick another name.",
     branchCreated: 'Branch {0} successfully created.',
     selectBranch: 'Select {0} branch to finish.',
     branchFinished: 'Branch {0} successfully finished.',
     dontHaveBranch: 'You do not have {0} branches.',
     feature: 'feature',
     bugfix: 'bugfix',
-    release: 'release'
+    release: 'release',
+    hotfix: 'hotfix',
+    existingReleaseBranchError: 'There is an existing release branch {0}. Finish that one first.'
 }
