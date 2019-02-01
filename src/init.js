@@ -104,7 +104,8 @@ const init = (context) => {
     })
 
     let gfSupportStart = vscode.commands.registerCommand('baba-flow.gfSupportStart', async () => {
-        handleBranchCreation(strings.support)
+        getDevelopBranch()
+        // handleBranchCreation(strings.support)
     })
 
     context.subscriptions.push(gfInit)
@@ -286,11 +287,9 @@ const getQuickPickOptionsFromList = (quickPickItems) => {
 }
 
 const getDevelopBranch = async () => {
-    const { stdout } = await exec('git config -l | grep gitflow.branch.develop', { cwd: vscode.workspace.rootPath })
+    const { stdout } = await exec('git config --get gitflow.branch.develop', { cwd: vscode.workspace.rootPath })
     if (stdout) {
-        const equalsMarkIndex = stdout.indexOf("=")
-        const developBranchName = stdout.slice(equalsMarkIndex + 1)
-        return developBranchName
+        return stdout
     }
 }
 
