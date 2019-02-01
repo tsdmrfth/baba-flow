@@ -104,8 +104,7 @@ const init = (context) => {
     })
 
     let gfSupportStart = vscode.commands.registerCommand('baba-flow.gfSupportStart', async () => {
-        getDevelopBranch()
-        // handleBranchCreation(strings.support)
+        // getDevelopBranch()
     })
 
     context.subscriptions.push(gfInit)
@@ -218,9 +217,15 @@ const handleBranchCreation = async (branchTag) => {
         }
 
         const branches = await getUserBranches()
-        const developBranchName = await getDevelopBranch()
-        let { label, quickPick } = await showQuickPickWithOptions(strings.optionalSelectedBaseBranch.format(developBranchName), branches)
-        const basingBranch = label === '' ? developBranchName : label.toString()
+        const developBranch = await getDevelopBranch()
+        branches.sort(a => {
+            if (a === developBranch) {
+                return -1
+            }
+        })
+
+        let { label, quickPick } = await showQuickPickWithOptions(strings.optionalSelectedBaseBranch.format(developBranch), branches)
+        const basingBranch = label === '' ? developBranch : label.toString()
         quickPick.hide()
 
         try {
