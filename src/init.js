@@ -103,8 +103,8 @@ const init = (context) => {
         handleBranchFinishing(strings.hotfix)
     })
 
-    let gfSupportStart = vscode.commands.registerCommand('baba-flow.gfSupportStart', async () => {
-        // getDevelopBranch()
+    let gfSupportStart = vscode.commands.registerCommand('baba-flow.gfSupportStart', () => {
+        handleBranchCreation(strings.release)
     })
 
     context.subscriptions.push(gfInit)
