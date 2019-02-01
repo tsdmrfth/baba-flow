@@ -7,6 +7,8 @@ const checkIsCommandInstalled = require('./utils/checkIsCommandInstalled')
 const strings = require('./strings')
 const { isEmptyString } = require('./utils/isEmptyString')
 
+let outputChannel
+
 const init = (context) => {
     let gfInit = vscode.commands.registerCommand('baba-flow.gfInit', async () => {
         let master, develop, feature, bugfix, release, hotfix, support, tagPrefix, hookDir = ''
@@ -86,7 +88,7 @@ const init = (context) => {
         const releaseBranches = await listBranches(strings.release)
         if (releaseBranches && releaseBranches.length > 0) {
             const branchName = releaseBranches[0]
-            return showInformationMessage(strings.existingReleaseBranchError.format(branchName))
+            return showInformationMessage(strings.existingBranchError.format(strings.release, branchName))
         }
         handleBranchCreation(strings.release)
     })
@@ -95,7 +97,12 @@ const init = (context) => {
         handleBranchFinishing(strings.release)
     })
 
-    let gfHotFixStart = vscode.commands.registerCommand('baba-flow.gfHotFixStart', () => {
+    let gfHotFixStart = vscode.commands.registerCommand('baba-flow.gfHotFixStart', async () => {
+        const hotFixBranches = await listBranches(strings.hotfix)
+        if (hotFixBranches && hotFixBranches.length > 0) {
+            const branchName = hotFixBranches[0]
+            return showInformationMessage(strings.existingBranchError.format(strings.hotfix, branchName))
+        }
         handleBranchCreation(strings.hotfix)
     })
 
@@ -103,8 +110,8 @@ const init = (context) => {
         handleBranchFinishing(strings.hotfix)
     })
 
-    let gfSupportStart = vscode.commands.registerCommand('baba-flow.gfSupportStart', () => {
-        handleBranchCreation(strings.release)
+    let gfSupportStart = vscode.commands.registerCommand('baba-flow.gfSupportStart', async () => {
+        handleBranchCreation(strings.support)
     })
 
     context.subscriptions.push(gfInit)
@@ -207,7 +214,8 @@ const getTerminal = () => {
 }
 
 const handleBranchCreation = async (branchTag) => {
-    if (await checkGF()) {
+    const isGitFlowInstalled = await await checkGF()
+    if (isGitFlowInstalled) {
         let branchName = await showInputBox(strings.branchStart.format(branchTag))
         if (!branchName) return
         if (isEmptyString(branchName)) {
@@ -229,21 +237,23 @@ const handleBranchCreation = async (branchTag) => {
         quickPick.hide()
 
         try {
-            const { error, stdout } = await exec(`git flow ${branchTag} start ${branchName} ${basingBranch}`, {
+            const { error, stdout, stderr } = await exec(`git flow ${branchTag} start ${branchName} ${basingBranch}`, {
                 cwd: vscode.workspace.rootPath
             })
             if (stdout) {
+                writeToOutput(stdout)
                 return showInformationMessage(strings.branchCreated.format(`${branchTag}/${branchName}`))
             }
-            showErrorMessage(error)
+            showErrorMessage(error || stderr)
         } catch (error) {
-            showErrorMessage(error)
+            writeToOutput(error, true)
         }
     }
 }
 
 const handleBranchFinishing = async (branchTag) => {
-    if (await checkGF()) {
+    const isGitFlowInstalled = await await checkGF()
+    if (isGitFlowInstalled) {
         const branches = await listBranches(branchTag)
         if (Array.isArray(branches)) {
             if (branches.length === 0) {
@@ -255,16 +265,35 @@ const handleBranchFinishing = async (branchTag) => {
             quickPick.hide()
 
             if (label) {
+                const isTagMessageRequired = branchTag === strings.hotfix || branchTag === strings.release
+
+                let tagMessage
+                if (isTagMessageRequired) {
+                    tagMessage = await vscode.window.showInputBox({
+                        placeHolder: strings.finishTagMessage,
+                        validateInput: (value) => {
+                            if (value === '') {
+                                return strings.aTagMessageIsMandatory
+                            }
+                        }
+                    })
+                }
+
+                const extraCommands = isTagMessageRequired ? `-m ${tagMessage}` : ''
+
                 try {
-                    const { error, stdout } = await exec(`git flow ${branchTag} finish ${label}`, {
+                    const { error, stdout, stderr } = await exec(`git flow ${branchTag} finish ${label} ${extraCommands}`, {
                         cwd: vscode.workspace.rootPath
                     })
                     if (stdout) {
+                        writeToOutput(stdout)
                         return showInformationMessage(strings.branchFinished.format(`${branchTag}/${label}`))
+                    } else if (error) {
+                        return writeToOutput(error, true)
                     }
-                    showErrorMessage(error)
+                    showErrorMessage(stderr)
                 } catch (error) {
-                    showErrorMessage(error)
+                    writeToOutput(error, true)
                 }
             }
         }
@@ -295,6 +324,16 @@ const getDevelopBranch = async () => {
     const { stdout } = await exec('git config --get gitflow.branch.develop', { cwd: vscode.workspace.rootPath })
     if (stdout) {
         return stdout
+    }
+}
+
+const writeToOutput = (message, showOutputChannel) => {
+    if (!outputChannel) {
+        outputChannel = vscode.window.createOutputChannel('BABA-Flow')
+    }
+    outputChannel.appendLine(message)
+    if (showOutputChannel) {
+        outputChannel.show()
     }
 }
 

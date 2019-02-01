@@ -22,6 +22,8 @@ module.exports = {
     release: 'release',
     hotfix: 'hotfix',
     support: 'support',
-    existingReleaseBranchError: 'There is an existing release branch {0}. Finish that one first.',
+    existingBranchError: 'There is an existing {0} branch {1}. Finish that one first.',
     optionalSelectedBaseBranch: 'Select one of your branches to basing it. (default is {0})',
+    finishTagMessage: 'Write a message for tag.',
+    aTagMessageIsMandatory: 'A tag message is mandatory.'
 }
