@@ -36,4 +36,5 @@ module.exports = {
     goToInstall: 'Install',
     selectBranchToDelete: 'Select one of your {0} branche(s) to delete.',
     branchDeleted: `Branch '{0}' successfully deleted.`,
+    gitFlowRepoCreated: 'Gif flow successfully initialized.'
 }

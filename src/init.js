@@ -64,6 +64,7 @@ const init = (context) => {
                     terminal.sendText(hookDir)
                     this.isHookDirSent = true
                     terminal.dispose()
+                    showInformationMessage(strings.gitFlowRepoCreated)
                 }
             })
         }
