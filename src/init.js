@@ -163,7 +163,7 @@ const init = (context) => {
 }
 
 const checkGF = async () => {
-    let isLibraryInstalled = await checkIsCommandInstalled('git flow')
+    let isLibraryInstalled = await checkIsCommandInstalled('git-flow')
     if (!isLibraryInstalled) {
         showLibraryNotInstalledMessage()
     }
@@ -171,10 +171,10 @@ const checkGF = async () => {
 }
 
 const showLibraryNotInstalledMessage = () => {
-    vscode.window.showErrorMessage(strings.libraryNotInstalled, strings.libraryInstallUrl)
+    vscode.window.showErrorMessage(strings.libraryNotInstalled, strings.goToInstall)
         .then(res => {
             if (res) {
-                open(res)
+                open(strings.libraryInstallUrl)
             }
         })
 }
@@ -250,7 +250,7 @@ const getTerminal = () => {
 }
 
 const handleBranchCreation = async (branchTag) => {
-    const isGitFlowInstalled = await await checkGF()
+    const isGitFlowInstalled = await checkGF()
     if (isGitFlowInstalled) {
         let branchName = await showInputBox(strings.branchStart.format(branchTag))
         if (!branchName) return
@@ -288,7 +288,7 @@ const handleBranchCreation = async (branchTag) => {
 }
 
 const handleBranchFinishing = async (branchTag) => {
-    const isGitFlowInstalled = await await checkGF()
+    const isGitFlowInstalled = await checkGF()
     if (isGitFlowInstalled) {
         const branches = await listBranches(branchTag)
         if (Array.isArray(branches)) {
@@ -337,7 +337,7 @@ const handleBranchFinishing = async (branchTag) => {
 }
 
 const handleBranchPublishing = async (branchTag) => {
-    const isGitFlowInstalled = await await checkGF()
+    const isGitFlowInstalled = await checkGF()
     if (isGitFlowInstalled) {
         const branches = await listBranches(branchTag)
         if (Array.isArray(branches)) {
@@ -373,6 +373,7 @@ const handleBranchPublishing = async (branchTag) => {
 
 const handleBranchRenaming = async (branchTag) => {
     const isGitFlowInstalled = await await checkGF()
+    console.log(isGitFlowInstalled, 'is')
     if (isGitFlowInstalled) {
         const branches = await listBranches(branchTag)
         if (Array.isArray(branches)) {

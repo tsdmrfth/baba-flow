@@ -1,5 +1,5 @@
 module.exports = {
-    libraryNotInstalled: `Git Flow library is not installed on your computer. Go to link and follow instructions to install it.`,
+    libraryNotInstalled: `Git Flow library is not installed on your computer. Click install and follow instructions to install it.`,
     libraryInstallUrl: 'https://goo.gl/M2Ai1a',
     firstGFInitQuestion: 'Branch name for production releases: [default is master]',
     secondGFInitQuestion: 'Branch name for "next release" development: [default is develop]',
@@ -33,4 +33,5 @@ module.exports = {
     selectBranchToRename: 'Select one of your {0} branche(s) to rename.',
     newNameForBranch: 'Enter new name for your {0} branch.',
     branchRenamed: 'Branch {0} successfully renamed to {1}.',
+    goToInstall: 'Install'
 }
