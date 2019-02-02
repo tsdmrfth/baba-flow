@@ -19,7 +19,11 @@
         "onCommand:baba-flow.gfReleaseFinish",
         "onCommand:baba-flow.gfHotFixStart",
         "onCommand:baba-flow.gfHotFixFinish",
-        "onCommand:baba-flow.gfSupportStart"
+        "onCommand:baba-flow.gfSupportStart",
+        "onCommand:baba-flow.gfFeaturePublish",
+        "onCommand:baba-flow.gfBugFixPublish",
+        "onCommand:baba-flow.gfReleasePublish",
+        "onCommand:baba-flow.gfHotFixPublish"
     ],
     "main": "./src/extension",
     "contributes": {
@@ -63,6 +67,22 @@
             {
                 "command": "baba-flow.gfSupportStart",
                 "title": "Git Flow: Support Start"
+            },
+            {
+                "command": "baba-flow.gfFeaturePublish",
+                "title": "Git Flow: Feature Publish"
+            },
+            {
+                "command": "baba-flow.gfBugFixPublish",
+                "title": "Git Flow: Bug Fix Publish"
+            },
+            {
+                "command": "baba-flow.gfReleasePublish",
+                "title": "Git Flow: Release Publish"
+            },
+            {
+                "command": "baba-flow.gfHotFixPublish",
+                "title": "Git Flow: Hot Fix Publish"
             }
         ]
     },

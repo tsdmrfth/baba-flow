@@ -14,7 +14,7 @@ module.exports = {
     branchNameEmptyWarning: 'Branch name can not be an empty string.',
     branchNameExist: "Fatal: Branch {0} already exists. Pick another name.",
     branchCreated: `Branch '{0}' successfully created.`,
-    selectBranch: `Select '{0}' branch to finish.`,
+    selectBranchFinish: `Select '{0}' branch to finish.`,
     branchFinished: 'Branch {0} successfully finished.',
     dontHaveBranch: 'You do not have {0} branches.',
     feature: 'feature',
@@ -25,5 +25,7 @@ module.exports = {
     existingBranchError: 'There is an existing {0} branch {1}. Finish that one first.',
     optionalSelectedBaseBranch: 'Select one of your branches to basing it. (default is {0})',
     finishTagMessage: 'Write a message for tag.',
-    aTagMessageIsMandatory: 'A tag message is mandatory.'
+    aTagMessageIsMandatory: 'A tag message is mandatory.',
+    selectBranchPublish: `Select '{0}' branch to publish.`,
+    branchPublished: 'Branch {0} successfully published.',
 }

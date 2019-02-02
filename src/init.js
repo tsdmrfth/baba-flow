@@ -72,12 +72,20 @@ const init = (context) => {
         handleBranchCreation(strings.feature)
     })
 
+    let gfFeaturePublish = vscode.commands.registerCommand('baba-flow.gfFeaturePublish', () => {
+        handleBranchPublishing(strings.feature)
+    })
+
     let gfFeatureFinish = vscode.commands.registerCommand('baba-flow.gfFeatureFinish', () => {
         handleBranchFinishing(strings.feature)
     })
 
     let gfBugFixStart = vscode.commands.registerCommand('baba-flow.gfBugFixStart', () => {
         handleBranchCreation(strings.bugfix)
+    })
+
+    let gfBugFixPublish = vscode.commands.registerCommand('baba-flow.gfBugFixPublish', () => {
+        handleBranchPublishing(strings.bugfix)
     })
 
     let gfBugFixFinish = vscode.commands.registerCommand('baba-flow.gfBugFixFinish', () => {
@@ -93,6 +101,10 @@ const init = (context) => {
         handleBranchCreation(strings.release)
     })
 
+    let gfReleasePublish = vscode.commands.registerCommand('baba-flow.gfReleasePublish', () => {
+        handleBranchPublishing(strings.release)
+    })
+
     let gfReleaseFinish = vscode.commands.registerCommand('baba-flow.gfReleaseFinish', () => {
         handleBranchFinishing(strings.release)
     })
@@ -104,6 +116,10 @@ const init = (context) => {
             return showInformationMessage(strings.existingBranchError.format(strings.hotfix, branchName))
         }
         handleBranchCreation(strings.hotfix)
+    })
+
+    let gfHotFixPublish = vscode.commands.registerCommand('baba-flow.gfHotFixPublish', () => {
+        handleBranchPublishing(strings.hotfix)
     })
 
     let gfHotFixFinish = vscode.commands.registerCommand('baba-flow.gfHotFixFinish', () => {
@@ -124,6 +140,10 @@ const init = (context) => {
     context.subscriptions.push(gfHotFixStart)
     context.subscriptions.push(gfHotFixFinish)
     context.subscriptions.push(gfSupportStart)
+    context.subscriptions.push(gfFeaturePublish)
+    context.subscriptions.push(gfBugFixPublish)
+    context.subscriptions.push(gfReleasePublish)
+    context.subscriptions.push(gfHotFixPublish)
 }
 
 const checkGF = async () => {
@@ -260,7 +280,7 @@ const handleBranchFinishing = async (branchTag) => {
                 return showInformationMessage(strings.dontHaveBranch.format(branchTag))
             }
 
-            let { label, quickPick } = await showQuickPickWithOptions(strings.selectBranch.format(branchTag), branches)
+            let { label, quickPick } = await showQuickPickWithOptions(strings.selectBranchFinish.format(branchTag), branches)
             label = label.replace(`${branchTag}/`, '')
             quickPick.hide()
 
@@ -292,6 +312,38 @@ const handleBranchFinishing = async (branchTag) => {
                         return writeToOutput(error, true)
                     }
                     showErrorMessage(stderr)
+                } catch (error) {
+                    writeToOutput(error, true)
+                }
+            }
+        }
+    }
+}
+
+const handleBranchPublishing = async (branchTag) => {
+    const isGitFlowInstalled = await await checkGF()
+    if (isGitFlowInstalled) {
+        const branches = await listBranches(branchTag)
+        if (Array.isArray(branches)) {
+            if (branches.length === 0) {
+                return showInformationMessage(strings.dontHaveBranch.format(branchTag))
+            }
+
+            let { label, quickPick } = await showQuickPickWithOptions(strings.selectBranchPublish.format(branchTag), branches)
+            label = label.replace(`${branchTag}/`, '')
+            quickPick.hide()
+
+            if (label) {
+                try {
+                    const { error, stdout, stderr } = await exec(`git flow ${branchTag} publish ${label}`, {
+                        cwd: vscode.workspace.rootPath
+                    })
+
+                    if (stdout) {
+                        writeToOutput(stdout)
+                        showInformationMessage(strings.branchPublished.format(`${branchTag}/${label}`))
+                    }
+                    writeToOutput(error || stderr, true)
                 } catch (error) {
                     writeToOutput(error, true)
                 }
