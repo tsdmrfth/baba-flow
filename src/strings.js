@@ -23,11 +23,14 @@ module.exports = {
     hotfix: 'hotfix',
     support: 'support',
     existingBranchError: 'There is an existing {0} branch {1}. Finish that one first.',
-    optionalSelectedBaseBranch: 'Select one of your branches to basing it. (default is {0})',
+    optionalSelectedBaseBranch: 'Select one of your branche(s) to basing it. (default is {0})',
     finishTagMessage: 'Write a message for tag.',
     aTagMessageIsMandatory: 'A tag message is mandatory.',
     selectBranchPublish: `Select '{0}' branch to publish.`,
     branchPublished: 'Branch {0} successfully published.',
     publishing: 'Publishing {0}',
-    branchPublishStatusBarText: 'Publishing your branch to your remote repository.'
+    branchPublishStatusBarText: 'Publishing your branch to your remote repository.',
+    selectBranchToRename: 'Select one of your {0} branche(s) to rename.',
+    newNameForBranch: 'Enter new name for your {0} branch.',
+    branchRenamed: 'Branch {0} successfully renamed to {1}.',
 }

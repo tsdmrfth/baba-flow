@@ -81,6 +81,10 @@ const init = (context) => {
         handleBranchFinishing(strings.feature)
     })
 
+    let gfFeatureRename = vscode.commands.registerCommand('baba-flow.gfFeatureRename', () => {
+        handleBranchRenaming(strings.feature)
+    })
+
     let gfBugFixStart = vscode.commands.registerCommand('baba-flow.gfBugFixStart', () => {
         handleBranchCreation(strings.bugfix)
     })
@@ -91,6 +95,10 @@ const init = (context) => {
 
     let gfBugFixFinish = vscode.commands.registerCommand('baba-flow.gfBugFixFinish', () => {
         handleBranchFinishing(strings.bugfix)
+    })
+
+    let gfBugFixRename = vscode.commands.registerCommand('baba-flow.gfBugFixRename', () => {
+        handleBranchRenaming(strings.bugfix)
     })
 
     let gfReleaseStart = vscode.commands.registerCommand('baba-flow.gfReleaseStart', async () => {
@@ -127,6 +135,10 @@ const init = (context) => {
         handleBranchFinishing(strings.hotfix)
     })
 
+    let gfHotFixRename = vscode.commands.registerCommand('baba-flow.gfHotFixRename', () => {
+        handleBranchRenaming(strings.hotfix)
+    })
+
     let gfSupportStart = vscode.commands.registerCommand('baba-flow.gfSupportStart', async () => {
         handleBranchCreation(strings.support)
     })
@@ -145,6 +157,9 @@ const init = (context) => {
     context.subscriptions.push(gfBugFixPublish)
     context.subscriptions.push(gfReleasePublish)
     context.subscriptions.push(gfHotFixPublish)
+    context.subscriptions.push(gfFeatureRename)
+    context.subscriptions.push(gfBugFixRename)
+    context.subscriptions.push(gfHotFixRename)
 }
 
 const checkGF = async () => {
@@ -351,6 +366,45 @@ const handleBranchPublishing = async (branchTag) => {
                 } catch (error) {
                     writeToOutput(error, true)
                 }
+            }
+        }
+    }
+}
+
+const handleBranchRenaming = async (branchTag) => {
+    const isGitFlowInstalled = await await checkGF()
+    if (isGitFlowInstalled) {
+        const branches = await listBranches(branchTag)
+        if (Array.isArray(branches)) {
+            if (branches.length === 0) {
+                return showInformationMessage(strings.dontHaveBranch.format(branchTag))
+            }
+
+            let { label, quickPick } = await showQuickPickWithOptions(strings.selectBranchToRename.format(branchTag), branches)
+            label = label.replace(`${branchTag}/`, '')
+            quickPick.hide()
+
+            let branchName = await showInputBox(strings.newNameForBranch.format(branchTag))
+            if (!branchName) return
+            if (isEmptyString(branchName)) {
+                return showWarningMessage(strings.branchNameEmptyWarning)
+            } else if (await checkHasBranch(branchTag, branchName)) {
+                return showErrorMessage(strings.branchNameExist.format(`${branchTag}/${branchName}`))
+            }
+
+            try {
+                const { error, stdout, stderr } = await exec(`git flow ${branchTag} rename ${branchName} ${label}`, {
+                    cwd: vscode.workspace.rootPath
+                })
+
+                if (stdout) {
+                    writeToOutput(stdout)
+                    showInformationMessage(strings.branchRenamed.format(label, branchName))
+                }
+
+                writeToOutput(error || stderr)
+            } catch (error) {
+                writeToOutput(error)
             }
         }
     }
