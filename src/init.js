@@ -85,6 +85,10 @@ const init = (context) => {
         handleBranchRenaming(strings.feature)
     })
 
+    let gfFeatureDelete = vscode.commands.registerCommand('baba-flow.gfFeatureDelete', () => {
+        handleBranchDeletion(strings.feature)
+    })
+
     let gfBugFixStart = vscode.commands.registerCommand('baba-flow.gfBugFixStart', () => {
         handleBranchCreation(strings.bugfix)
     })
@@ -99,6 +103,10 @@ const init = (context) => {
 
     let gfBugFixRename = vscode.commands.registerCommand('baba-flow.gfBugFixRename', () => {
         handleBranchRenaming(strings.bugfix)
+    })
+
+    let gfBugFixDelete = vscode.commands.registerCommand('baba-flow.gfBugFixDelete', () => {
+        handleBranchDeletion(strings.bugfix)
     })
 
     let gfReleaseStart = vscode.commands.registerCommand('baba-flow.gfReleaseStart', async () => {
@@ -116,6 +124,10 @@ const init = (context) => {
 
     let gfReleaseFinish = vscode.commands.registerCommand('baba-flow.gfReleaseFinish', () => {
         handleBranchFinishing(strings.release)
+    })
+
+    let gfReleaseDelete = vscode.commands.registerCommand('baba-flow.gfReleaseDelete', () => {
+        handleBranchDeletion(strings.release)
     })
 
     let gfHotFixStart = vscode.commands.registerCommand('baba-flow.gfHotFixStart', async () => {
@@ -139,6 +151,10 @@ const init = (context) => {
         handleBranchRenaming(strings.hotfix)
     })
 
+    let gfHotFixDelete = vscode.commands.registerCommand('baba-flow.gfHotFixDelete', () => {
+        handleBranchDeletion(strings.hotfix)
+    })
+
     let gfSupportStart = vscode.commands.registerCommand('baba-flow.gfSupportStart', async () => {
         handleBranchCreation(strings.support)
     })
@@ -160,6 +176,10 @@ const init = (context) => {
     context.subscriptions.push(gfFeatureRename)
     context.subscriptions.push(gfBugFixRename)
     context.subscriptions.push(gfHotFixRename)
+    context.subscriptions.push(gfFeatureDelete)
+    context.subscriptions.push(gfBugFixDelete)
+    context.subscriptions.push(gfReleaseDelete)
+    context.subscriptions.push(gfHotFixDelete)
 }
 
 const checkGF = async () => {
@@ -405,6 +425,39 @@ const handleBranchRenaming = async (branchTag) => {
                 writeToOutput(error || stderr)
             } catch (error) {
                 writeToOutput(error)
+            }
+        }
+    }
+}
+
+const handleBranchDeletion = async (branchTag) => {
+    const isGitFlowInstalled = await await checkGF()
+    if (isGitFlowInstalled) {
+        const branches = await listBranches(branchTag)
+        if (Array.isArray(branches)) {
+            if (branches.length === 0) {
+                return showInformationMessage(strings.dontHaveBranch.format(branchTag))
+            }
+
+            let { label, quickPick } = await showQuickPickWithOptions(strings.selectBranchToRename.format(branchTag), branches)
+            label = label.replace(`${branchTag}/`, '')
+            quickPick.hide()
+
+            if (label) {
+                try {
+                    const { error, stdout, stderr } = await exec(`git flow ${branchTag} delete ${label}`, {
+                        cwd: vscode.workspace.rootPath
+                    })
+
+                    if (stdout) {
+                        writeToOutput(stdout)
+                        showInformationMessage(strings.branchDeleted.format(`${branchTag}/${label}`, label))
+                    }
+
+                    writeToOutput(error || stderr)
+                } catch (error) {
+                    writeToOutput(error)
+                }
             }
         }
     }

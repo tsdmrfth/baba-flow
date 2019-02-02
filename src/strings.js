@@ -33,5 +33,7 @@ module.exports = {
     selectBranchToRename: 'Select one of your {0} branche(s) to rename.',
     newNameForBranch: 'Enter new name for your {0} branch.',
     branchRenamed: 'Branch {0} successfully renamed to {1}.',
-    goToInstall: 'Install'
+    goToInstall: 'Install',
+    selectBranchToDelete: 'Select one of your {0} branche(s) to delete.',
+    branchDeleted: `Branch '{0}' successfully deleted.`,
 }

@@ -26,7 +26,11 @@
         "onCommand:baba-flow.gfHotFixPublish",
         "onCommand:baba-flow.gfFeatureRename",
         "onCommand:baba-flow.gfBugFixRename",
-        "onCommand:baba-flow.gfHotFixRename"
+        "onCommand:baba-flow.gfHotFixRename",
+        "onCommand:baba-flow.gfFeatureDelete",
+        "onCommand:baba-flow.gfBugFixDelete",
+        "onCommand:baba-flow.gfReleaseDelete",
+        "onCommand:baba-flow.gfHotFixDelete"
     ],
     "main": "./src/extension",
     "contributes": {
@@ -98,6 +102,22 @@
             {
                 "command": "baba-flow.gfHotFixRename",
                 "title": "Git Flow: Hot Fix Rename"
+            },
+            {
+                "command": "baba-flow.gfFeatureDelete",
+                "title": "Git Flow: Feature Delete"
+            },
+            {
+                "command": "baba-flow.gfBugFixDelete",
+                "title": "Git Flow: Bug Fix Delete"
+            },
+            {
+                "command": "baba-flow.gfReleaseDelete",
+                "title": "Git Flow: Release Delete"
+            },
+            {
+                "command": "baba-flow.gfHotFixDelete",
+                "title": "Git Flow: Hot Fix Delete"
             }
         ]
     },
