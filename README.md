@@ -13,7 +13,7 @@ BABA Flow is an extension to run [git flow](https://github.com/nvie/gitflow) com
 
 ## Requirements
 
-[git flow](https://github.com/nvie/gitflow) should be [installed](https://goo.gl/M2Ai1a) on your compouter.
+[git flow](https://github.com/nvie/gitflow) should be [installed](https://goo.gl/M2Ai1a) on your computer.
 
 ## Extension Commands
 
