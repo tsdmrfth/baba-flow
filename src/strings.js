@@ -28,4 +28,6 @@ module.exports = {
     aTagMessageIsMandatory: 'A tag message is mandatory.',
     selectBranchPublish: `Select '{0}' branch to publish.`,
     branchPublished: 'Branch {0} successfully published.',
+    publishing: 'Publishing {0}',
+    branchPublishStatusBarText: 'Publishing your branch to your remote repository.'
 }

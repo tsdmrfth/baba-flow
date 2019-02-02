@@ -8,6 +8,7 @@ const strings = require('./strings')
 const { isEmptyString } = require('./utils/isEmptyString')
 
 let outputChannel
+let statusBarItem
 
 const init = (context) => {
     let gfInit = vscode.commands.registerCommand('baba-flow.gfInit', async () => {
@@ -335,11 +336,14 @@ const handleBranchPublishing = async (branchTag) => {
 
             if (label) {
                 try {
+                    let statusBarItem = showStatusBarItem(strings.publishing.format('$(cloud-upload)'), strings.branchPublishStatusBarText)
                     const { error, stdout, stderr } = await exec(`git flow ${branchTag} publish ${label}`, {
                         cwd: vscode.workspace.rootPath
                     })
 
                     if (stdout) {
+                        statusBarItem.dispose()
+                        statusBarItem = undefined
                         writeToOutput(stdout)
                         showInformationMessage(strings.branchPublished.format(`${branchTag}/${label}`))
                     }
@@ -387,6 +391,16 @@ const writeToOutput = (message, showOutputChannel) => {
     if (showOutputChannel) {
         outputChannel.show()
     }
+}
+
+const showStatusBarItem = (statusBarText, statusBarTooltip) => {
+    if (!statusBarItem) {
+        statusBarItem = vscode.window.createStatusBarItem(1, 10)
+    }
+    statusBarItem.text = statusBarText
+    statusBarItem.tooltip = statusBarTooltip
+    statusBarItem.show()
+    return statusBarItem
 }
 
 module.exports = init
