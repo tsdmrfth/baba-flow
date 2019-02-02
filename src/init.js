@@ -383,7 +383,7 @@ const handleBranchPublishing = async (branchTag) => {
                         writeToOutput(stdout)
                         showInformationMessage(strings.branchPublished.format(`${branchTag}/${label}`))
                     }
-                    writeToOutput(error || stderr, true)
+                    writeToOutput(error || stderr)
                 } catch (error) {
                     writeToOutput(error, true)
                 }
