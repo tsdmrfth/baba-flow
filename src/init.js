@@ -373,7 +373,6 @@ const handleBranchPublishing = async (branchTag) => {
 
 const handleBranchRenaming = async (branchTag) => {
     const isGitFlowInstalled = await await checkGF()
-    console.log(isGitFlowInstalled, 'is')
     if (isGitFlowInstalled) {
         const branches = await listBranches(branchTag)
         if (Array.isArray(branches)) {
