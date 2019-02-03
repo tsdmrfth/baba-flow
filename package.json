@@ -2,13 +2,40 @@
     "name": "baba-flow",
     "displayName": "BABA-Flow",
     "description": "Git Flow extension for Visual Studio Code.",
+    "icon": "images/icon.png",
+    "author": {
+        "name": "Fatih Tasdemir",
+        "email": "tsdmrfth@gmail.com"
+    },
+    "repository": {
+        "url": "https://github.com/tsdmrfth/baba-flow"
+    },
+    "bugs": {
+        "email": "tsdmrfth@gmail.com",
+        "url": "https://github.com/tsdmrfth/baba-flow/issues"
+    },
+    "keywords": [
+        "git",
+        "flow",
+        "git flow",
+        "git-flow",
+        "feature",
+        "relese",
+        "bugfix",
+        "bug fix",
+        "hotfix",
+        "hot fix",
+        "support"
+    ],
     "version": "0.0.1",
     "engines": {
         "vscode": "^1.30.0"
     },
     "categories": [
+        "SCM Providers",
         "Other"
     ],
+    "license": "MIT",
     "activationEvents": [
         "onCommand:baba-flow.gfInit",
         "onCommand:baba-flow.gfFeatureStart",
