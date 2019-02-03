@@ -2,7 +2,7 @@
 
 BABA Flow is an extension to run [git flow](https://github.com/nvie/gitflow) commands from Visual Studio Code.
 
-![](https://github.com/tsdmrfth/baba-flow/blob/feature/build_extension/images/tutorial.gif)
+![](https://github.com/tsdmrfth/baba-flow/blob/master/images/tutorial.gif)
 
 ## Features
 
