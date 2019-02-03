@@ -2,32 +2,166 @@
     "name": "baba-flow",
     "displayName": "BABA-Flow",
     "description": "Git Flow extension for Visual Studio Code.",
-    "version": "0.0.1",
+    "icon": "images/icon.png",
+    "author": {
+        "name": "Fatih Tasdemir",
+        "email": "tsdmrfth@gmail.com"
+    },
+    "repository": {
+        "url": "https://github.com/tsdmrfth/baba-flow"
+    },
+    "bugs": {
+        "email": "tsdmrfth@gmail.com",
+        "url": "https://github.com/tsdmrfth/baba-flow/issues"
+    },
+    "keywords": [
+        "git",
+        "flow",
+        "git flow",
+        "git-flow",
+        "feature",
+        "relese",
+        "bugfix",
+        "bug fix",
+        "hotfix",
+        "hot fix",
+        "support"
+    ],
+    "version": "1.0.0",
     "engines": {
         "vscode": "^1.30.0"
     },
     "categories": [
+        "SCM Providers",
         "Other"
     ],
+    "license": "MIT",
+    "publisher": "Fatih",
     "activationEvents": [
-        "onCommand:extension.sayHello"
+        "onCommand:baba-flow.gfInit",
+        "onCommand:baba-flow.gfFeatureStart",
+        "onCommand:baba-flow.gfFeatureFinish",
+        "onCommand:baba-flow.gfBugFixStart",
+        "onCommand:baba-flow.gfBugFixFinish",
+        "onCommand:baba-flow.gfReleaseStart",
+        "onCommand:baba-flow.gfReleaseFinish",
+        "onCommand:baba-flow.gfHotFixStart",
+        "onCommand:baba-flow.gfHotFixFinish",
+        "onCommand:baba-flow.gfSupportStart",
+        "onCommand:baba-flow.gfFeaturePublish",
+        "onCommand:baba-flow.gfBugFixPublish",
+        "onCommand:baba-flow.gfReleasePublish",
+        "onCommand:baba-flow.gfHotFixPublish",
+        "onCommand:baba-flow.gfFeatureRename",
+        "onCommand:baba-flow.gfBugFixRename",
+        "onCommand:baba-flow.gfHotFixRename",
+        "onCommand:baba-flow.gfFeatureDelete",
+        "onCommand:baba-flow.gfBugFixDelete",
+        "onCommand:baba-flow.gfReleaseDelete",
+        "onCommand:baba-flow.gfHotFixDelete"
     ],
-    "main": "./extension",
+    "main": "./src/extension",
     "contributes": {
-        "commands": [{
-            "command": "extension.sayHello",
-            "title": "Hello World"
-        }]
+        "commands": [
+            {
+                "command": "baba-flow.gfInit",
+                "title": "Git Flow: Init"
+            },
+            {
+                "command": "baba-flow.gfFeatureStart",
+                "title": "Git Flow: Feature Start"
+            },
+            {
+                "command": "baba-flow.gfFeatureFinish",
+                "title": "Git Flow: Feature Finish"
+            },
+            {
+                "command": "baba-flow.gfBugFixStart",
+                "title": "Git Flow: Bug Fix Start"
+            },
+            {
+                "command": "baba-flow.gfBugFixFinish",
+                "title": "Git Flow: Bug Fix Finish"
+            },
+            {
+                "command": "baba-flow.gfReleaseStart",
+                "title": "Git Flow: Release Start"
+            },
+            {
+                "command": "baba-flow.gfReleaseFinish",
+                "title": "Git Flow: Release Finish"
+            },
+            {
+                "command": "baba-flow.gfHotFixStart",
+                "title": "Git Flow: Hot Fix Start"
+            },
+            {
+                "command": "baba-flow.gfHotFixFinish",
+                "title": "Git Flow: Hot Fix Finish"
+            },
+            {
+                "command": "baba-flow.gfSupportStart",
+                "title": "Git Flow: Support Start"
+            },
+            {
+                "command": "baba-flow.gfFeaturePublish",
+                "title": "Git Flow: Feature Publish"
+            },
+            {
+                "command": "baba-flow.gfBugFixPublish",
+                "title": "Git Flow: Bug Fix Publish"
+            },
+            {
+                "command": "baba-flow.gfReleasePublish",
+                "title": "Git Flow: Release Publish"
+            },
+            {
+                "command": "baba-flow.gfHotFixPublish",
+                "title": "Git Flow: Hot Fix Publish"
+            },
+            {
+                "command": "baba-flow.gfFeatureRename",
+                "title": "Git Flow: Feature Rename"
+            },
+            {
+                "command": "baba-flow.gfBugFixRename",
+                "title": "Git Flow: Bug Fix Rename"
+            },
+            {
+                "command": "baba-flow.gfHotFixRename",
+                "title": "Git Flow: Hot Fix Rename"
+            },
+            {
+                "command": "baba-flow.gfFeatureDelete",
+                "title": "Git Flow: Feature Delete"
+            },
+            {
+                "command": "baba-flow.gfBugFixDelete",
+                "title": "Git Flow: Bug Fix Delete"
+            },
+            {
+                "command": "baba-flow.gfReleaseDelete",
+                "title": "Git Flow: Release Delete"
+            },
+            {
+                "command": "baba-flow.gfHotFixDelete",
+                "title": "Git Flow: Hot Fix Delete"
+            }
+        ]
     },
     "scripts": {
         "postinstall": "node ./node_modules/vscode/bin/install",
         "test": "node ./node_modules/vscode/bin/test"
     },
     "devDependencies": {
-        "typescript": "^3.1.4",
-        "vscode": "^1.1.25",
-        "eslint": "^4.11.0",
+        "@types/mocha": "^2.2.42",
         "@types/node": "^8.10.25",
-        "@types/mocha": "^2.2.42"
+        "eslint": "^4.11.0",
+        "expect": "^23.6.0",
+        "typescript": "^3.1.4",
+        "vscode": "^1.1.25"
+    },
+    "dependencies": {
+        "open": "^0.0.5"
     }
 }

@@ -1,33 +1,57 @@
-# Welcome to your VS Code Extension
+# BABA Flow
 
-## What's in the folder
-* This folder contains all of the files necessary for your extension.
-* `package.json` - this is the manifest file in which you declare your extension and command.
-The sample plugin registers a command and defines its title and command name. With this information
-VS Code can show the command in the command palette. It doesn’t yet need to load the plugin.
-* `extension.js` - this is the main file where you will provide the implementation of your command.
-The file exports one function, `activate`, which is called the very first time your extension is
-activated (in this case by executing the command). Inside the `activate` function we call `registerCommand`.
-We pass the function containing the implementation of the command as the second parameter to
-`registerCommand`.
+BABA Flow is an extension to run [git flow](https://github.com/nvie/gitflow) commands from Visual Studio Code.
 
-## Get up and running straight away
-* Press `F5` to open a new window with your extension loaded.
-* Run your command from the command palette by pressing (`Ctrl+Shift+P` or `Cmd+Shift+P` on Mac) and typing `Hello World`.
-* Set breakpoints in your code inside `extension.js` to debug your extension.
-* Find output from your extension in the debug console.
+![](https://github.com/tsdmrfth/baba-flow/blob/feature/build_extension/images/tutorial.gif)
 
-## Make changes
-* You can relaunch the extension from the debug toolbar after changing code in `extension.js`.
-* You can also reload (`Ctrl+R` or `Cmd+R` on Mac) the VS Code window with your extension to load your changes.
+## Features
 
-## Explore the API
-* You can open the full set of our API when you open the file `node_modules/vscode/vscode.d.ts`.
+- Setup a git repository for git flow usage. Can also be used to start a git repository.
+- Start, finish, publish, rename, delete feature branches.
+- Start, finish, publish, rename, delete bug fix branches.
+- Start, finish, publish, delete release branches.
+- Start, finish, publish, rename, delete hot fix branches.
+- Start support branches.
 
-## Run tests
-* Open the debug viewlet (`Ctrl+Shift+D` or `Cmd+Shift+D` on Mac) and from the launch configuration dropdown pick `Extension Tests`.
-* Press `F5` to run the tests in a new window with your extension loaded.
-* See the output of the test result in the debug console.
-* Make changes to `test/extension.test.js` or create new test files inside the `test` folder.
-    * By convention, the test runner will only consider files matching the name pattern `**.test.js`.
-    * You can create folders inside the `test` folder to structure your tests any way you want.
+## Requirements
+
+[git flow](https://github.com/nvie/gitflow) should be [installed](https://goo.gl/M2Ai1a) on your computer.
+
+## Extension Commands
+
+> Press `⇧⌘P (Shift + Command + P)` for macOS, `Ctrl+Shift+P` for Windows and Linux distributions to show command palette. Type the following command names.
+
+| Commands |      Description       |
+|----------|---------------|
+|Git Flow: Init|Setup a git repository for git flow usage.|
+|Git Flow: Feature Start|Start a feature branch.|
+|Git Flow: Feature Finish| Finish a feature branch|
+|Git Flow: Feature Publish|Publish a feature branch.|
+|Git Flow: Feature Rename|Rename a feature branch.|
+|Git Flow: Feature Delete|Delete a feature branch.|
+|Git Flow: Bug Fix Start|Start a bug fix branch.|
+|Git Flow: Bug Fix Finish|Finish a bug fix branch.|
+|Git Flow: Bug Fix Publish|Publish a bug fix branch.|
+|Git Flow: Bug Fix Rename|Rename a bug fix branch.|
+|Git Flow: Bug Fix Delete|Delete a bug fix branch.|
+|Git Flow: Release Start|Start a release branch.|
+|Git Flow: Release Finish|Finish a bug fix branch.|
+|Git Flow: Release Publish|Publish a release branch.|
+|Git Flow: Release Delete|Delete a release branch.|
+|Git Flow: Hot Fix Start|Start a hot fix branch.|
+|Git Flow: Hot Fix Finish|Finish a hot fix branch.|
+|Git Flow: Hot Fix Publish|Publish a hot fix branch.|
+|Git Flow: Hot Fix Rename|Rename a hot fix branch.|
+|Git Flow: Hot Fix Delete|Delete a hot fix branch.|
+|Git Flow: Support Start|Start a support branch.|
+
+## Release Notes
+
+- Extension created.
+
+### 1.0.0
+
+Initial release of BABA Flow
+
+## Author
+[tsdmrfth](https://github.com/tsdmrfth)
