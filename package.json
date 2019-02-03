@@ -36,7 +36,7 @@
         "Other"
     ],
     "license": "MIT",
-    "publisher": "tsdmrfth",
+    "publisher": "Fatih",
     "activationEvents": [
         "onCommand:baba-flow.gfInit",
         "onCommand:baba-flow.gfFeatureStart",
