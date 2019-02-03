@@ -1,6 +1,6 @@
 {
     "name": "baba-flow",
-    "displayName": "BABA-Flow",
+    "displayName": "BABA-Git Flow",
     "description": "Git Flow extension for Visual Studio Code.",
     "icon": "images/icon.png",
     "author": {
