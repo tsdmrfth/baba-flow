@@ -1,65 +1,57 @@
-# baba-flow README
+# BABA Flow
 
-This is the README for your extension "baba-flow". After writing up a brief description, we recommend including the following sections.
+BABA Flow is an extension to run [git flow](https://github.com/nvie/gitflow) commands from Visual Studio Code.
+
+![](https://github.com/tsdmrfth/baba-flow/blob/feature/build_extension/images/tutorial.gif)
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
-
-For example if there is an image subfolder under your extension project workspace:
-
-\!\[feature X\]\(images/feature-x.png\)
-
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+- Setup a git repository for git flow usage. Can also be used to start a git repository.
+- Start, finish, publish, rename, delete feature branches.
+- Start, finish, publish, rename, delete bug fix branches.
+- Start, finish, publish, delete release branches.
+- Start, finish, publish, rename, delete hot fix branches.
+- Start support branches.
 
 ## Requirements
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+[git flow](https://github.com/nvie/gitflow) should be [installed](https://goo.gl/M2Ai1a) on your computer.
 
-## Extension Settings
+## Extension Commands
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+> Press `⇧⌘P (Shift + Command + P)` for macOS, `Ctrl+Shift+P` for Windows and Linux distributions to show command palette. Type the following command names.
 
-For example:
-
-This extension contributes the following settings:
-
-* `myExtension.enable`: enable/disable this extension
-* `myExtension.thing`: set to `blah` to do something
-
-## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
+| Commands |      Description       |
+|----------|---------------|
+|Git Flow: Init|Setup a git repository for git flow usage.|
+|Git Flow: Feature Start|Start a feature branch.|
+|Git Flow: Feature Finish| Finish a feature branch|
+|Git Flow: Feature Publish|Publish a feature branch.|
+|Git Flow: Feature Rename|Rename a feature branch.|
+|Git Flow: Feature Delete|Delete a feature branch.|
+|Git Flow: Bug Fix Start|Start a bug fix branch.|
+|Git Flow: Bug Fix Finish|Finish a bug fix branch.|
+|Git Flow: Bug Fix Publish|Publish a bug fix branch.|
+|Git Flow: Bug Fix Rename|Rename a bug fix branch.|
+|Git Flow: Bug Fix Delete|Delete a bug fix branch.|
+|Git Flow: Release Start|Start a release branch.|
+|Git Flow: Release Finish|Finish a bug fix branch.|
+|Git Flow: Release Publish|Publish a release branch.|
+|Git Flow: Release Delete|Delete a release branch.|
+|Git Flow: Hot Fix Start|Start a hot fix branch.|
+|Git Flow: Hot Fix Finish|Finish a hot fix branch.|
+|Git Flow: Hot Fix Publish|Publish a hot fix branch.|
+|Git Flow: Hot Fix Rename|Rename a hot fix branch.|
+|Git Flow: Hot Fix Delete|Delete a hot fix branch.|
+|Git Flow: Support Start|Start a support branch.|
 
 ## Release Notes
 
-Users appreciate release notes as you update your extension.
+- Extension created.
 
 ### 1.0.0
 
-Initial release of ...
+Initial release of BABA Flow
 
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
------------------------------------------------------------------------------------------------------------
-
-## Working with Markdown
-
-**Note:** You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+CMD+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (macOS) to see a list of Markdown snippets
-
-### For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+## Author
+[tsdmrfth](https://github.com/tsdmrfth)
