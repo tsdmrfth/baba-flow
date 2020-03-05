@@ -1,3 +1,5 @@
+# Looking for a maintainer. Currently i do not have time because of my positional changes. If you want to maintain this extension please contact me tsdmrfth@gmail.com
+
 # BABA Flow
 
 BABA Flow is an extension to run [git flow](https://github.com/nvie/gitflow) commands from Visual Studio Code.
